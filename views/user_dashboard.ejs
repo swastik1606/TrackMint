@@ -7,7 +7,7 @@
     </h1>
 
     <div class="chart-1-container">
-        <h1>Overview</h1>
+        <h1>Income-Expense Chart</h1>
         <div>
             <canvas id="userChart"></canvas>
         </div>
@@ -19,6 +19,8 @@
     <button class="data-btn"><a href="/trackmint/data">Delete Data</a></button>
     </div>
 
+    <%if(monthlyData){%>
+    <h1>Earning-Expense Pie Charts</h1>
     <section class="pieChartSec">
     <div class="chart-2-container">
         <h1>Earnings Divison</h1>
@@ -34,6 +36,30 @@
         </div>
     </div>
     </section>
+    <%}%>
+
+<%if(monthlyData){%>
+    <div class="journal">
+        <h1>Journal</h1>
+        <ul class="journal-list">
+                <% for(data of monthlyData.slice(-5)) {%>
+                    <li><%=data[0]%>: <%if(data[1].earnings>data[1].expenses) {%>
+                            <%const profit=data[1].earnings-data[1].expenses %>
+                            <%=profit%> <span style="color: #adffc3;">Profit</span> 
+                        <%}%>
+                        <%if (data[1].expenses>data[1].earnings){%>
+                            <%const loss=data[1].expenses-data[1].earnings%>
+                            <%=loss%> <span style="color: rgb(255, 57, 57);">Loss</span>
+                        <%}%>
+                        <%if(data[1].earnings===data[1].expenses){%>
+                            0 <span style="color:gray">Breakeven</span>
+                        <%}%>
+                    </li>   
+                <%}%>
+        </ul>
+        <a href="/trackmint/<%=currentUser._id%>/journal">...View More</a>
+    </div>
+    <%}%>
 
 </main>
 

@@ -17,15 +17,7 @@ module.exports.dashboard = async (req, res) => {
 
 module.exports.userDashboard = async (req, res) => {
     try {
-        const userData = await user.findById(req.user._id).populate('data');
-
-        console.log("Raw user data from DB:", userData.data); // Log the full data for inspection
-
-        // Check for specific data structure issues
-        userData.data.forEach(entry => {
-            console.log("Earnings categoryAmounts:", entry.earnings.categoryAmounts);
-            console.log("Expenses categoryAmounts:", entry.expenses.categoryAmounts);
-        });
+        const userData = await user.findById(req.user._id).populate('data')
 
         const monthlyData = userData.data.reduce((acc, curr) => {
             const monthKey = `${curr.date.month} ${curr.date.year}`;
@@ -62,8 +54,6 @@ module.exports.userDashboard = async (req, res) => {
 
             return acc;
         }, {});
-
-        console.log("Processed monthly data:", monthlyData);
 
         res.render('user_dashboard.ejs', {
             userData,
@@ -142,3 +132,38 @@ module.exports.addData = async (req, res) => {
         res.status(500).redirect('/trackmint');
     }
 };
+
+module.exports.journal= async (req,res)=>{
+    const userData=await user.findById(req.user._id).populate('data')
+    const details= userData.data.map(d=>({
+        month:d.date.month,
+        year:d.date.year,
+        earnings:d.earnings.amount,
+        expenses:d.expenses.amount,
+        earningsCat:d.earnings.category,
+        expenseCat:d.expenses.category,
+        notes:d.notes,
+        id:d._id
+    }))
+
+    res.render('journal.ejs',{details})
+}
+
+module.exports.note=async (req,res)=>{
+    try{
+        const {docId, note}=req.body
+
+        const updatedData=await data.findByIdAndUpdate(docId, {notes:note}, {new:true});
+
+        if(!updatedData){
+            console.error("Document not found!")
+        }
+
+        res.json({success:true, note:updatedData.notes })
+    }
+
+    catch(err){
+        console.error('error updating data', err)
+    }
+    
+}

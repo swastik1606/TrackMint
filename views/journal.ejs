@@ -1,0 +1,55 @@
+<% layout('layouts/boilerplate.ejs') %>
+
+<main class="journal-main">
+    <h1 class="journal-h">Journal</h1>
+    <div class="journal-div">
+        <section class="info-div">
+            <div class="month-div">
+                <h3 class="month">Month</h3>
+                <div class="monthList">
+                    <% for (detail of details) { %>
+                        <p><%= `${detail.month} ${detail.year}` %></p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="earnings-div">
+                <h3 class="earnings">Earnings</h3>
+                <div class="earningsList">
+                    <% for (detail of details) { %>
+                        <p><%= detail.earnings %></p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="expenses-div">
+                <h3 class="expenses">Expenses</h3>
+                <div class="expensesList">
+                    <% for (detail of details) { %>
+                        <p><%= detail.expenses %></p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="notes-div">
+                <h3 class="notes">Notes</h3>
+                <div class="notesList">
+                    <% for (detail of details) { %>
+                        <% if (detail.notes) { %>
+                            <p><%= detail.notes.length > 35 ? `${detail.notes.slice(0, 35)}...` : detail.notes %></p>
+                        <% } else { %>
+                            <form class="notes-form">
+                                <input type="text" placeholder="Add a note...!" class="note-input" id="<%=detail.id%>">
+                            </form>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script>
+    const userId = '<%= currentUser._id %>';
+</script>
+<script src="/js/note.js"></script>

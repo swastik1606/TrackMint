@@ -12,5 +12,8 @@ router.route('/data')
 
 router.get('/:id/dashboard', isLoggedIn, controller.userDashboard)
 
+router.get('/:id/journal', isLoggedIn, controller.journal)
+
+router.post('/:id/journal/note', isLoggedIn, controller.note)
 
 module.exports=router;

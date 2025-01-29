@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Exp Category Totals:', expCategoryTotals);
 
     const chartColors = [
-        'rgb(255, 99, 132)',
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(153, 102, 255)',
-        'rgb(255, 159, 64)'
+        '#adffc3',
+        '#c1a7f9',
+        '#a2d1f9',
+        '#f9e0a2',
+        '#f9a2c1',
+        '#f9c1a2'
     ];
 
     // Earnings Pie Chart
@@ -102,10 +102,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'top',
+                        position: 'bottom',
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Earnings by Category'
                     }
                 }
@@ -130,10 +130,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: 'top',
+                        position: 'bottom',
                     },
                     title: {
-                        display: true,
+                        display: false,
                         text: 'Expenses by Category'
                     }
                 }

@@ -160,6 +160,16 @@ nav li:hover{
     padding: 10px;
 }
 
+.journal .journal-list{
+    list-style-type:decimal;
+    font-size: 18px;
+    margin-left: -35px;
+}
+
+.journal .journal-list li{
+    margin: 15px;
+}
+
 .data-btn-container{
     display: inline;
     margin: 0 auto;
@@ -370,3 +380,65 @@ nav li:hover{
     margin-top: 10px;
 }
 
+.journal-h{
+    text-align: center;
+    font-size: 40px;
+}
+
+.journal-div{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 50px;
+}
+
+.info-div{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 250px;
+}
+
+.info-div div{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+}
+
+.info-div h3{
+    font-size: 28px;
+    font-weight: 600;
+    color:#adffc3;
+}
+
+.info-div p{
+    font-size: 18px;
+}
+
+.notes-form {
+    display: flex;
+    flex-direction: row; /* Changed from column to row */
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 10px; /* Adds some space between input and button */
+}
+
+.notes-form input {
+    justify-content: center;
+    margin-top: 0;
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    color: white;
+    margin-top: 26.5px;
+}
+
+.notes-form button {
+    background-color: #adffc3;
+    border-radius: 4px;
+    padding: 4px 8px; /* Added horizontal padding */
+    border: none;
+    cursor: pointer;
+    height: fit-content; /* Ensures button height matches content */
+    margin-top: 26.5px;
+}
