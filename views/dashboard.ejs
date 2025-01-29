@@ -1,0 +1,50 @@
+<%layout('layouts/boilerplate.ejs') %>
+
+<main class="dash-main">
+    <h1 class="dash-greet">
+        <% if(currentUser){ %>👋 Hi, <%= currentUser%>
+        <% } else { %>Welcome to <span style="color: #adffc3;">TrackMint!</span><% } %>
+    </h1>
+    <p>TrackMint is your ultimate solution for managing your finances, designed to simplify and enhance your financial journey. With an intuitive interface and robust features.</p>
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <button class="data-btn"><a href="/trackmint/data">+ Add Data</a></button>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [
+                {
+                    label: 'Monthly Earnings',
+                    data: [40000, 50000, 20000, 40000, 30000, 80000, 25000],
+                    borderWidth: 2,
+                    borderColor: '#adffc3',
+                    backgroundColor: 'rgba(0, 255, 0, 0.1)'
+                },
+                {
+                    label: 'Monthly Expenses',
+                    data: [30000, 60000, 10000, 20000, 35000, 15000, 25000],
+                    borderWidth: 2,
+                    borderColor: '#d9303d',
+                    backgroundColor: 'rgba(255, 0, 0, 0.1)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,348 @@
+body{
+    background-color: black;
+    color: white;
+    font-family: outfit, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+body button{
+    font-family: outfit, sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+nav {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+}
+
+nav li:hover{
+    text-decoration: underline white;
+    cursor: pointer;
+}
+
+.nav-ul {
+    font-size: 18px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: -25px;
+}
+
+.nav-ul li{
+    list-style: none;
+    margin: 10px;
+}
+
+.nav-ul-reg {
+    margin-right: 10px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: auto;
+}
+
+.nav-ul-reg li{
+    list-style: none;
+    margin: 10px;
+}
+
+.branding {
+    display: flex;
+    align-items: center;
+}
+
+.branding-logo {
+    padding: 5px;
+    width: 45px;
+    height: 45px;
+}
+
+.branding-h {
+    margin-left: 10px;
+    font-weight: 600;
+    color: #adffc3;
+    font-size: 25px;
+    margin-left: 2px;
+}
+
+.footer {
+    background-color: transparent;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    margin-top: auto;
+}
+
+.footer span{
+    color:rgb(107, 107, 107)
+}
+
+.dash-main{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.dash-main p{
+    width: 600px;
+    margin-bottom: 30px;
+}
+
+.dash-main #myChart{
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.dash-greet{
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.chart-1-container{
+    margin-top: 8px;
+}
+
+.chart-2-container{
+    margin-top: 65px;
+}
+
+.dash-user-greet{
+    margin-left: -200px;
+}
+
+.dash-user-main{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.chart-1-container #userChart{
+    width: 800px;
+    height: 300px;
+}
+
+.chart-2-container #userPieEarnChart {
+    width: 450px !important;
+    height: 450px !important;
+}
+.data-btn-container{
+    display: inline;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.data-btn{
+    color: black;
+    background-color: #adffc3;
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.data-btn a{
+    color: black;
+}
+
+.data-user-btn{
+    color: black;
+    background-color: #adffc3;
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.reg-main{
+    margin: auto;
+}
+.user-info{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.regForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 15px;
+}
+
+.reg-h1{
+    text-align: center;
+    font-size: 45px;
+}
+
+.regForm input{
+    width: 400px;
+    height: 22px;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    background-color: #c4c3c3;
+    transition: background-color 200ms;
+    padding: 5px;
+}
+
+.regForm input:focus{
+    background-color: whitesmoke;
+}
+
+.reg-main .submit-btn{
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #adffc3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 200ms;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.submit-btn a{
+    color: black;
+}
+
+.submit-btn:hover{
+    background-color: #8beba8;
+}
+
+.lookGood {
+    color: #adffc3;
+    font-size: 16px;
+    margin-top: -8px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+
+}
+
+.lookGood.visible {
+    opacity: 1;
+    max-height: 50px; 
+}
+
+.data-main{
+    margin:0 auto;
+    margin-top: -25px;
+}
+
+.data-div{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.data-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 15px;
+}
+
+.data-form input, .data-form textarea, .data-form select{
+    width: 400px;
+    height: 22px;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    background-color: #c4c3c3;
+    transition: background-color 200ms;
+    padding: 5px;
+    display: block;
+}
+
+.data-form select{
+    height: 30px;
+    width: 410px;
+}
+
+.data-form textarea{
+    height: 60px;
+}
+
+.data-form .submit-btn{
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #adffc3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 200ms;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.data-form .submit-btn:hover{
+    background-color: #8beba8;
+}
+
+.data-form input:focus, .data-form textarea:focus, .data-form select:focus{
+    background-color: whitesmoke;
+}
+
+.addEarnCat, .addExpCat{
+    display: block;
+    color: black;
+    background-color: #adffc3;
+    width: 120px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: -10px;
+}
+
+
+.earnDiv input, .expDiv input{
+    margin-bottom:35px;
+    margin-top: 10px;
+}
+

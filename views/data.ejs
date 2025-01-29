@@ -1,0 +1,56 @@
+<%layout('layouts/boilerplate.ejs') %>
+
+<main class="data-main">
+    <h1 class="reg-h1">Add Data!</h1>
+    <div class="data-div">
+    <form action="/trackmint/data" method="POST" class="data-form">
+        <label for="month">Month:</label>
+        <select id="month" name="date.month">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </select>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="date.year">
+        <div class="lookGood">Looks Good</div>
+
+        <div class="earnDiv">
+        <label for="earnings">Earnings:</label>
+        <input type="number" id="earnings" name="earnings.amount[]">
+        <div class="lookGood">Looks Good</div>
+        <label for="earnCat">Category:</label>
+        <input type="text" id="earnCat" name="earnings.category[]">
+        <div class="lookGood">Looks Good</div>
+        <button type="button" class="addEarnCat">+Add Category</button>
+        </div>
+
+        <div class="expDiv">
+        <label for="expenses">Expenses:</label>
+        <input type="number" id="expenses" name="expenses.amount">
+        <div class="lookGood">Looks Good</div>
+        <label for="expCat">Category:</label>
+        <input type="text" id="expCat" name="expenses.category">
+        <div class="lookGood">Looks Good</div>
+        <button type="button" class="addExpCat">+Add Category</button>
+        </div>
+
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="notes"></textarea>
+
+        <button class="submit-btn" type="submit">Submit</button>
+    </form>
+    </div>
+</main>
+
+<script src="/js/data.js"></script>
+<script src="/js/dataValidation.js"></script>
+

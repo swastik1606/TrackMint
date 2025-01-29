@@ -1,0 +1,25 @@
+<%layout('layouts/boilerplate.ejs') %>
+
+<main class="reg-main">
+<h1 class="reg-h1">Register!</h1>
+<div class="user-info">
+    <form action="/trackmint/register" method="POST" class="regForm">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username">
+        <div class="lookGood">Looks Good!</div>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password">
+        <div class="lookGood">Looks Good!</div>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email">
+        <div class="lookGood">Looks Good!</div>
+
+        <button class="submit-btn">Submit</button>
+    </form>
+    <p>Already have an account? <a href="/trackmint/login" style="color: #adffc3;">Login here!</a></p>
+</div>
+</main>
+
+<script src="/js/register.js"></script>

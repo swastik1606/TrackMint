@@ -1,0 +1,24 @@
+<nav>
+<div class="branding">
+    <img src='/images/Logo.png' alt='TrackMint Logo' class='branding-logo'>
+    <h1 class="branding-h">TrackMint</h1>
+</div>
+<ul class="nav-ul">
+    <% if(currentUser){ %>
+        <li><a href="/trackmint/<%=currentUser._id%>/dashboard">Dashboard</a></li>
+    <% } else { %>
+        <li><a href="/trackmint">Dashboard</a></li>
+    <% } %>
+    <li>History</li>
+    <li>Savings</li>
+</ul>
+
+<ul class="nav-ul-reg">
+    <% if(!currentUser) {%>
+        <li><a href="/trackmint/login">Login</a></li>
+        <li><a href="/trackmint/register">Register</a></li>
+    <% } else{ %>
+    <li><a href="/trackmint/logout">Logout</a></li>
+    <% } %>
+</ul>
+</nav>

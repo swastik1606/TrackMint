@@ -1,0 +1,40 @@
+<%layout('layouts/boilerplate.ejs') %>
+
+<main class="dash-user-main">
+
+    <h1 class="dash-user-greet"><% if(currentUser){
+        %>👋 Hi, <%= userData.username %><% } else { %>Welcome to TrackMint!<% } %>
+    </h1>
+
+    <div class="chart-1-container">
+        <h1>Overview</h1>
+        <div>
+            <canvas id="userChart"></canvas>
+        </div>
+    </div>
+
+    <div class="data-btn-container">
+    <button class="data-btn"><a href="/trackmint/data">+ Add Data</a></button>
+    <button class="data-btn"><a href="/trackmint/data">Edit Data</a></button>
+    <button class="data-btn"><a href="/trackmint/data">Delete Data</a></button>
+    </div>
+
+    <div class="chart-2-container">
+        <h1>Earnings Divison</h1>
+        <div>
+            <canvas id="userPieEarnChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-3-container">
+        <h1>Expenses Divison</h1>
+        <div>
+            <canvas id="userPieExpChart"></canvas>
+        </div>
+    </div>
+
+</main>
+
+<script>const monthlyData = <%-JSON.stringify(monthlyData || []) %>;</script>
+<script src="/js/dashboard.js"></script>
+
