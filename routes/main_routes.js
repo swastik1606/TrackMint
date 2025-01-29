@@ -16,4 +16,9 @@ router.get('/:id/journal', isLoggedIn, controller.journal)
 
 router.post('/:id/journal/note', isLoggedIn, controller.note)
 
+router.route('/data/:id/manage')
+    .get(isLoggedIn, controller.getManagePage)
+    
+router.delete('/data/:id/manage/:documentId',isLoggedIn,controller.delete)
+
 module.exports=router;

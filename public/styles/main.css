@@ -190,6 +190,19 @@ nav li:hover{
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    transition: all 200ms ease-in;
+}
+
+.data-btn:hover{
+    background-color: #8beba8;
+}
+
+#remove-btn{
+    background-color: #8beba8;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .data-btn a{
@@ -391,6 +404,14 @@ nav li:hover{
     gap: 50px;
 }
 
+.journal a{
+    transition: all 200ms ease-in;
+}
+
+.journal a:hover{
+    color:#adffc3
+}
+
 .info-div{
     display: flex;
     justify-content: space-evenly;
@@ -441,4 +462,54 @@ nav li:hover{
     cursor: pointer;
     height: fit-content; /* Ensures button height matches content */
     margin-top: 26.5px;
+}
+
+.manage-h{
+    text-align: center;
+    font-size: 45px;
+}
+
+.manage-main{
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    margin: 0 auto;
+    gap: 30px;
+}
+.manage-div{
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.manage-div h3 {
+    font-weight: 500;
+}
+
+.manage-div button{
+    padding: 8px;
+    border-radius: 6px;
+    border: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.manage-div button a{
+    color: white;
+    font-weight: 500;
+}
+
+.manage-div .delete-btn{
+    background-color: #d9303d;
+}
+
+.manage-div .edit-btn{
+    background-color: #4169e1;
+    margin-left: 10px;
+}
+
+.manage-div h2{
+    color: #adffc3;
 }

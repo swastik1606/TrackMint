@@ -26,6 +26,7 @@ addEarnBtn.addEventListener('click', () => {
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.textContent = 'Remove';
+    removeBtn.id='remove-btn'
     removeBtn.onclick = function() {
         earnLabel.remove();
         earnInput.remove();
@@ -69,6 +70,7 @@ addExpBtn.addEventListener('click', () => {
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
     removeBtn.textContent = 'Remove';
+    removeBtn.id='remove-btn'
     removeBtn.onclick = function() {
         expLabel.remove();
         expInput.remove();

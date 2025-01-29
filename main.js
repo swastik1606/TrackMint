@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const path = require('path');
 const ejsMate=require('ejs-mate');
+const methodOverride = require('method-override')
 
 const passport=require('passport');
 const LocalStrategy=require('passport-local');
@@ -27,6 +28,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/trackmint')
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(methodOverride('_method'))
 
 app.set('views', path.join(__dirname, '/views'));app.engine('ejs', ejsMate);
 app.engine('ejs', ejsMate);

@@ -48,16 +48,3 @@ form.addEventListener('input', (e) => {
         });
     }
 });
-
-
-const fake= document.createElement('button')
-fake.type='button'
-fake.textContent='Fake Data'
-form.appendChild(fake)
-fake.addEventListener('click',()=>{
-    earn.value='1000'
-    exp.value='500'
-    earnCat.value='Salary'
-    expCat.value='Rent'
-    year.value='2021'
-})

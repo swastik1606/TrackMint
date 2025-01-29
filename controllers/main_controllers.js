@@ -167,3 +167,26 @@ module.exports.note=async (req,res)=>{
     }
     
 }
+
+module.exports.getManagePage=async (req,res)=>{
+    const userData=await user.findById(req.user._id).populate('data')
+    const details=userData.data.map(d=>({
+        month:d.date.month,
+        year:d.date.year,
+        earnings:d.earnings.amount,
+        expenses:d.expenses.amount,
+        earningsCat:d.earnings.category,
+        expenseCat:d.expenses.category,
+        notes:d.notes,
+        id:d._id
+    }))
+
+    res.render('manage.ejs',{details})
+}
+
+module.exports.delete=async(req,res)=>{
+    const {id, documentId}=req.params
+    const deletedData= await data.findByIdAndDelete(documentId)
+    await user.findByIdAndUpdate(id, {$pull: {data:documentId}})
+    res.redirect(`/trackmint/data/${id}/manage`)
+}
