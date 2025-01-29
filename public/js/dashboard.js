@@ -42,40 +42,36 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Updated category totals calculation to handle Mongoose objects
     const earnCategoryTotals = monthlyData.reduce((acc, [, monthData]) => {
-        // Get the original categories and amounts from your MongoDB structure
-        const categories = monthData.earningsCategory || [];
-        const amounts = monthData.earnings;
+        // If `earnCategoryAmounts` is a Mongoose Map object, convert it to plain object
+        if (monthData.earnCategoryAmounts instanceof Map) {
+            monthData.earnCategoryAmounts = Object.fromEntries(monthData.earnCategoryAmounts);
+        }
         
-        // Combine categories with their amounts
-        categories.forEach((category, index) => {
-            if (category === 'Salary') {
-                acc[category] = (acc[category] || 0) + 14000; // Hardcoded from your MongoDB example
-            } else if (category === 'Bonus') {
-                acc[category] = (acc[category] || 0) + 6000; // Hardcoded from your MongoDB example
+        if (monthData.earnCategoryAmounts && typeof monthData.earnCategoryAmounts === 'object') {
+            // Iterate over the plain object for earnings category totals
+            for (const [category, amount] of Object.entries(monthData.earnCategoryAmounts)) {
+                acc[category] = (acc[category] || 0) + amount;
             }
-        });
-        
+        }
         return acc;
     }, {});
 
     const expCategoryTotals = monthlyData.reduce((acc, [, monthData]) => {
-        // Get the original categories and amounts from your MongoDB structure
-        const categories = monthData.expensesCategory || [];
-        const amounts = monthData.expenses;
-        
-        // Combine categories with their amounts
-        categories.forEach((category, index) => {
-            if (category === 'Rent') {
-                acc[category] = (acc[category] || 0) + 5000; // Hardcoded from your MongoDB example
-            } else if (category === 'Food') {
-                acc[category] = (acc[category] || 0) + 3000; // Hardcoded from your MongoDB example
+        // If `expCategoryAmounts` is a Mongoose Map object, convert it to plain object
+        if (monthData.expCategoryAmounts instanceof Map) {
+            monthData.expCategoryAmounts = Object.fromEntries(monthData.expCategoryAmounts);
+        }
+    
+        if (monthData.expCategoryAmounts && typeof monthData.expCategoryAmounts === 'object') {
+            // Iterate over the plain object for expenses category totals
+            for (const [category, amount] of Object.entries(monthData.expCategoryAmounts)) {
+                acc[category] = (acc[category] || 0) + amount;
             }
-        });
-        
+        }
         return acc;
     }, {});
+    
 
     console.log('Earn Category Totals:', earnCategoryTotals);
     console.log('Exp Category Totals:', expCategoryTotals);
