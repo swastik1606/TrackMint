@@ -114,10 +114,6 @@ nav li:hover{
     margin-top: 8px;
 }
 
-.chart-2-container{
-    margin-top: 65px;
-}
-
 .dash-user-greet{
     margin-left: -200px;
 }
@@ -133,14 +129,42 @@ nav li:hover{
     height: 300px;
 }
 
+.chart-2-container{
+    margin: 0;
+    text-align: center;
+}
+
+.chart-3-container{
+    text-align: center;
+}
+
 .chart-2-container #userPieEarnChart {
     width: 450px !important;
     height: 450px !important;
 }
+
+.chart-3-container #userPieExpChart {
+    width: 450px !important;
+    height: 450px !important;
+}
+
+.pieChartSec{
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: row;
+    gap: 160px;
+    margin-bottom: 45px;
+    height: auto;
+    padding: 10px;
+}
+
 .data-btn-container{
     display: inline;
     margin: 0 auto;
     margin-top: 15px;
+    margin-bottom: 45px;
 }
 
 .data-btn{

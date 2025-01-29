@@ -19,7 +19,7 @@ module.exports.userDashboard = async (req, res) => {
     try {
         const userData = await user.findById(req.user._id).populate('data');
 
-        console.log(userData)
+        console.log("Raw user data from DB:", userData.data); // Debug log
 
         const monthlyData = userData.data.reduce((acc, curr) => {
             const monthKey = `${curr.date.month} ${curr.date.year}`;
@@ -29,7 +29,8 @@ module.exports.userDashboard = async (req, res) => {
                     expenses: 0,
                     earningsCategory: [],
                     expensesCategory: [],
-                    categoryAmounts:{}
+                    earnCategoryAmounts: {},
+                    expCategoryAmounts: {}
                 }
             }
             acc[monthKey].earnings += curr.earnings.amount;
@@ -53,16 +54,27 @@ module.exports.userDashboard = async (req, res) => {
                 ...expensesCategories
             ])];
 
+            // Directly copy the categoryAmounts from the database
             if (curr.earnings.categoryAmounts) {
-                Object.entries(Object.fromEntries(curr.earnings.categoryAmounts)).forEach(([category, amount]) => {
-                    acc[monthKey].categoryAmounts[category] =
-                        (acc[monthKey].categoryAmounts[category] || 0) + amount;
-                });
+                acc[monthKey].earnCategoryAmounts = {
+                    ...acc[monthKey].earnCategoryAmounts,
+                    ...curr.earnings.categoryAmounts
+                };
+            }
+
+            if (curr.expenses.categoryAmounts) {
+                acc[monthKey].expCategoryAmounts = {
+                    ...acc[monthKey].expCategoryAmounts,
+                    ...curr.expenses.categoryAmounts
+                };
             }
             
             return acc;
         }, {});
 
+        console.log("Processed monthly data:", monthlyData); // Debug log
+        console.log("Sample monthly data entry:", Object.entries(monthlyData)[0]);
+        
         res.render('user_dashboard.ejs', {
             userData,
             monthlyData: Object.entries(monthlyData)

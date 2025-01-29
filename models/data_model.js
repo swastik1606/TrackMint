@@ -41,6 +41,11 @@ const dataSchema = new Schema({
             type: Number,
             required: true,
             min: 0
+        },
+        categoryAmounts: {
+            type: Map,
+            of: Number,
+            default: {}
         }
     },
     notes: {
