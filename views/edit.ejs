@@ -1,0 +1,76 @@
+<%layout('layouts/boilerplate.ejs') %>
+
+<main class="data-main">
+    <h1 class="reg-h1">Edit Data!</h1>
+    <div class="data-div">
+        <form action="/trackmint/data/<%=currentUser._id%>/manage/<%=foundData._id%>?_method=PUT" method="POST" class="data-form">
+            <label for="month">Month:</label>
+            <select id="month" name="date.month">
+                <% const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] %>
+                <% for(let month of months) { %>
+                    <option value="<%=month%>" <%=foundData.date.month === month ? 'selected' : ''%>><%=month%></option>
+                <% } %>
+            </select>
+
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="date.year" value="<%=foundData.date.year%>">
+            <div class="lookGood">Looks Good</div>
+
+            <div class="earnDiv">
+                <h3 class="earn-h3">Earnings</h3>
+                <% foundData.earnings.category.forEach((category, index) => { %>
+                    <div class="earning-entry">
+                        <label for="earnings-<%=index%>">Earnings:</label>
+                        <input type="number" 
+                               id="earnings-<%=index%>" 
+                               name="earnings.amount[]" 
+                               value="<%=foundData.earnings.categoryAmounts.get(category)%>">
+                        <div class="lookGood">Looks Good</div>
+
+                        <label for="earnCat-<%=index%>">Category:</label>
+                        <input type="text" 
+                               id="earnCat-<%=index%>" 
+                               name="earnings.category[]" 
+                               value="<%=category%>">
+                        <div class="lookGood">Looks Good</div>
+
+                        <button type="button" class="remove-btn">Remove</button>
+                    </div>
+                <% }) %>
+                <button type="button" class="addEarnCat">+Add Category</button>
+            </div>
+
+            <div class="expDiv">
+                <h3 class="exp-h3">Expenses</h3>
+                <% foundData.expenses.category.forEach((category, index) => { %>
+                    <div class="expense-entry">
+                        <label for="expenses-<%=index%>">Expenses:</label>
+                        <input type="number" 
+                               id="expenses-<%=index%>" 
+                               name="expenses.amount[]" 
+                               value="<%=foundData.expenses.categoryAmounts.get(category)%>">
+                        <div class="lookGood">Looks Good</div>
+
+                        <label for="expCat-<%=index%>">Category:</label>
+                        <input type="text" 
+                               id="expCat-<%=index%>" 
+                               name="expenses.category[]" 
+                               value="<%=category%>">
+                        <div class="lookGood">Looks Good</div>
+
+                        <button type="button" class="remove-btn">Remove</button>
+                    </div>
+                <% }) %>
+                <button type="button" class="addExpCat">+Add Category</button>
+            </div>
+
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes"><%=foundData.notes%></textarea>
+
+            <button class="submit-btn" type="submit">Update</button>
+        </form>
+    </div>
+</main>
+
+<script src="/js/editData.js"></script>
+<script src="/js/dataEditValidation.js"></script>

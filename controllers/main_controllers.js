@@ -190,3 +190,79 @@ module.exports.delete=async(req,res)=>{
     await user.findByIdAndUpdate(id, {$pull: {data:documentId}})
     res.redirect(`/trackmint/data/${id}/manage`)
 }
+
+module.exports.getEditPage=async (req,res)=>{
+    const {id, documentId}=req.params
+    const foundData= await data.findById(documentId)
+    res.render('edit.ejs',{foundData})
+}
+
+module.exports.edit=async(req,res)=>{
+    const { id, documentId } = req.params;
+        const { 
+            'date.month': month, 
+            'date.year': year,
+            'earnings.amount': earningsAmounts,
+            'earnings.category': earningsCategories, 
+            'expenses.amount': expensesAmounts,
+            'expenses.category': expensesCategories,
+            notes 
+        } = req.body;
+
+        // Create categoryAmounts map for earnings
+        const earningsCategoryAmounts = {};
+        if (Array.isArray(earningsCategories)) {
+            earningsCategories.forEach((category, index) => {
+                if (category && earningsAmounts[index]) {
+                    earningsCategoryAmounts[category] = parseFloat(earningsAmounts[index] || 0);
+                }
+            });
+        }
+
+        // Create categoryAmounts map for expenses
+        const expensesCategoryAmounts = {};
+        if (Array.isArray(expensesCategories)) {
+            expensesCategories.forEach((category, index) => {
+                if (category && expensesAmounts[index]) {
+                    expensesCategoryAmounts[category] = parseFloat(expensesAmounts[index] || 0);
+                }
+            });
+        }
+
+        // Calculate totals
+        const totalEarnings = Object.values(earningsCategoryAmounts).reduce((sum, amount) => sum + amount, 0);
+        const totalExpenses = Object.values(expensesCategoryAmounts).reduce((sum, amount) => sum + amount, 0);
+
+        const updatedData = {
+            date: { month, year },
+            earnings: {
+                category: Object.keys(earningsCategoryAmounts),
+                amount: totalEarnings,
+                categoryAmounts: earningsCategoryAmounts
+            },
+            expenses: {
+                category: Object.keys(expensesCategoryAmounts),
+                amount: totalExpenses,
+                categoryAmounts: expensesCategoryAmounts
+            },
+            notes
+        };
+
+        await data.findByIdAndUpdate(documentId, updatedData);
+        res.redirect(`/trackmint/data/${id}/manage`);
+}
+
+module.exports.savings=async(req,res)=>{
+    const userData=await user.findById(req.user._id).populate('data')
+    const details= userData.data.map(d=>({
+        month:d.date.month,
+        year:d.date.year,
+        earnings:d.earnings.amount,
+        expenses:d.expenses.amount,
+        earningsCat:d.earnings.category,
+        expenseCat:d.expenses.category,
+        notes:d.notes,
+        id:d._id
+    }))
+    res.render('savings.ejs',{userData, details})
+}

@@ -197,12 +197,13 @@ nav li:hover{
     background-color: #8beba8;
 }
 
-#remove-btn{
+#remove-btn, .remove-btn{
     background-color: #8beba8;
     border: none;
     padding: 5px;
     border-radius: 4px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .data-btn a{
@@ -248,6 +249,7 @@ nav li:hover{
 .reg-h1{
     text-align: center;
     font-size: 45px;
+    color:#adffc3;
 }
 
 .regForm input{
@@ -512,4 +514,14 @@ nav li:hover{
 
 .manage-div h2{
     color: #adffc3;
+}
+
+.earn-h3, .exp-h3{
+    color:#adffc3;
+}
+
+.save-img{
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
 }

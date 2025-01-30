@@ -1,4 +1,4 @@
-    <%layout('layouts/boilerplate.ejs') %>
+<%layout('layouts/boilerplate.ejs') %>
 
     <main class="manage-main">
         <h1 class="manage-h">Manage Data!</h1>
@@ -16,7 +16,7 @@
                 <form action="/trackmint/data/<%=currentUser._id%>/manage/<%=detail.id%>?_method=DELETE" method="POST" class="delete-form">
                 <button class="delete-btn"><a>Delete Data</a></button>
                 </form>
-                <button class="edit-btn"><a>Edit Data</a></button>
+                <button class="edit-btn"><a href="/trackmint/data/<%=currentUser._id%>/manage/<%=detail.id%>">Edit Data</a></button>
             </div>
         <%}%>
     </main>

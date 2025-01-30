@@ -8,6 +8,7 @@ function setupExistingRemoveButtons() {
     const existingRemoveButtons = document.querySelectorAll('.remove-btn');
     existingRemoveButtons.forEach(button => {
         button.addEventListener('click', function() {
+            // Find the parent entry div and remove it
             const entryDiv = this.closest('.earning-entry, .expense-entry');
             if (entryDiv) {
                 entryDiv.remove();
@@ -25,28 +26,29 @@ addEarnBtn.addEventListener('click', () => {
     earnEntryDiv.className = 'earning-entry';
 
     const earnLabel = document.createElement('label');
+    const earnInput = document.createElement('input');
+    const catLabel = document.createElement('label');
+    const catInput = document.createElement('input');
+    const lookGoodDiv1 = document.createElement('div');
+    const lookGoodDiv2 = document.createElement('div');
+
     earnLabel.textContent = 'Earnings:';
     earnLabel.setAttribute('for', `earnings-${timestamp}`);
 
-    const earnInput = document.createElement('input');
-    earnInput.type = 'number';
     earnInput.id = `earnings-${timestamp}`;
+    earnInput.type = 'number';
     earnInput.name = 'earnings.amount[]';
 
-    const lookGoodDiv1 = document.createElement('div');
     lookGoodDiv1.className = 'lookGood';
     lookGoodDiv1.textContent = 'Looks Good';
 
-    const catLabel = document.createElement('label');
     catLabel.textContent = 'Category:';
     catLabel.setAttribute('for', `earnCat-${timestamp}`);
 
-    const catInput = document.createElement('input');
-    catInput.type = 'text';
     catInput.id = `earnCat-${timestamp}`;
+    catInput.type = 'text';
     catInput.name = 'earnings.category[]';
 
-    const lookGoodDiv2 = document.createElement('div');
     lookGoodDiv2.className = 'lookGood';
     lookGoodDiv2.textContent = 'Looks Good';
 
@@ -54,6 +56,10 @@ addEarnBtn.addEventListener('click', () => {
     removeBtn.type = 'button';
     removeBtn.textContent = 'Remove';
     removeBtn.className = 'remove-btn';
+    
+    removeBtn.addEventListener('click', function() {
+        earnEntryDiv.remove();
+    });
 
     earnEntryDiv.appendChild(earnLabel);
     earnEntryDiv.appendChild(earnInput);
@@ -63,15 +69,7 @@ addEarnBtn.addEventListener('click', () => {
     earnEntryDiv.appendChild(lookGoodDiv2);
     earnEntryDiv.appendChild(removeBtn);
 
-    // Insert the new entry before the Add Category button
-    addEarnBtn.parentElement.insertBefore(earnEntryDiv, addEarnBtn);
-
-    // Manually trigger input event listeners for new fields
-    const form = document.querySelector('.data-form');
-    if (form.classList.contains('submitted')) {
-        earnInput.dispatchEvent(new Event('input'));
-        catInput.dispatchEvent(new Event('input'));
-    }
+    addEarnBtn.insertAdjacentElement('beforebegin', earnEntryDiv);
 });
 
 addExpBtn.addEventListener('click', () => {
@@ -80,28 +78,29 @@ addExpBtn.addEventListener('click', () => {
     expEntryDiv.className = 'expense-entry';
 
     const expLabel = document.createElement('label');
+    const expInput = document.createElement('input');
+    const catLabel = document.createElement('label');
+    const catInput = document.createElement('input');
+    const lookGoodDiv1 = document.createElement('div');
+    const lookGoodDiv2 = document.createElement('div');
+
     expLabel.textContent = 'Expenses:';
     expLabel.setAttribute('for', `expenses-${timestamp}`);
 
-    const expInput = document.createElement('input');
-    expInput.type = 'number';
     expInput.id = `expenses-${timestamp}`;
+    expInput.type = 'number';
     expInput.name = 'expenses.amount[]';
 
-    const lookGoodDiv1 = document.createElement('div');
     lookGoodDiv1.className = 'lookGood';
     lookGoodDiv1.textContent = 'Looks Good';
 
-    const catLabel = document.createElement('label');
     catLabel.textContent = 'Category:';
     catLabel.setAttribute('for', `expCat-${timestamp}`);
 
-    const catInput = document.createElement('input');
-    catInput.type = 'text';
     catInput.id = `expCat-${timestamp}`;
+    catInput.type = 'text';
     catInput.name = 'expenses.category[]';
 
-    const lookGoodDiv2 = document.createElement('div');
     lookGoodDiv2.className = 'lookGood';
     lookGoodDiv2.textContent = 'Looks Good';
 
@@ -109,6 +108,10 @@ addExpBtn.addEventListener('click', () => {
     removeBtn.type = 'button';
     removeBtn.textContent = 'Remove';
     removeBtn.className = 'remove-btn';
+    
+    removeBtn.addEventListener('click', function() {
+        expEntryDiv.remove();
+    });
 
     expEntryDiv.appendChild(expLabel);
     expEntryDiv.appendChild(expInput);
@@ -118,23 +121,5 @@ addExpBtn.addEventListener('click', () => {
     expEntryDiv.appendChild(lookGoodDiv2);
     expEntryDiv.appendChild(removeBtn);
 
-    // Insert the new entry before the Add Category button
-    addExpBtn.parentElement.insertBefore(expEntryDiv, addExpBtn);
-
-    // Manually trigger input event listeners for new fields
-    const form = document.querySelector('.data-form');
-    if (form.classList.contains('submitted')) {
-        expInput.dispatchEvent(new Event('input'));
-        catInput.dispatchEvent(new Event('input'));
-    }
-});
-
-// Add event delegation for remove buttons
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('remove-btn')) {
-        const entryDiv = e.target.closest('.earning-entry, .expense-entry');
-        if (entryDiv) {
-            entryDiv.remove();
-        }
-    }
+    addExpBtn.insertAdjacentElement('beforebegin', expEntryDiv);
 });

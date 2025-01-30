@@ -14,11 +14,17 @@ router.get('/:id/dashboard', isLoggedIn, controller.userDashboard)
 
 router.get('/:id/journal', isLoggedIn, controller.journal)
 
+router.route('/:id/savings')
+    .get(isLoggedIn, controller.savings)
+
 router.post('/:id/journal/note', isLoggedIn, controller.note)
 
 router.route('/data/:id/manage')
     .get(isLoggedIn, controller.getManagePage)
     
 router.delete('/data/:id/manage/:documentId',isLoggedIn,controller.delete)
+router.route('/data/:id/manage/:documentId')
+    .get(isLoggedIn, controller.getEditPage)
+    .put(isLoggedIn, controller.edit)
 
 module.exports=router;
