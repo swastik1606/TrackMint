@@ -18,7 +18,11 @@ const userSchema = new Schema({
     data: [{
         type: Schema.Types.ObjectId,
         ref: 'Data'
-    }]
+    }],
+    savings:{
+        type: Schema.Types.ObjectId,
+        ref:'Savings'
+    }
 });
 
 userSchema.plugin(passportLocalMongoose);

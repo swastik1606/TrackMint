@@ -10,25 +10,32 @@
                     <% for (detail of details) { %>
                         <p><%= `${detail.month} ${detail.year}` %></p>
                     <% } %>
+                    <span>Total</span>
                 </div>
             </div>
 
             <div class="earnings-div">
                 <h3 class="earnings">Earnings</h3>
                 <div class="earningsList">
+                    <% let earnTotal = 0; %>
                     <% for (detail of details) { %>
                         <p><%= detail.earnings %></p>
+                        <% earnTotal += detail.earnings; %>
                     <% } %>
                 </div>
+                <span><%=earnTotal%></span>
             </div>
 
             <div class="expenses-div">
                 <h3 class="expenses">Expenses</h3>
                 <div class="expensesList">
+                    <% let expTotal=0; %>
                     <% for (detail of details) { %>
                         <p><%= detail.expenses %></p>
+                        <% expTotal += detail.expenses %>
                     <% } %>
                 </div>
+                <span><%=expTotal%></span>
             </div>
 
             <div class="notes-div">

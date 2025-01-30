@@ -16,6 +16,8 @@ router.get('/:id/journal', isLoggedIn, controller.journal)
 
 router.route('/:id/savings')
     .get(isLoggedIn, controller.savings)
+    .post(isLoggedIn, controller.addMoney)
+    .put(isLoggedIn, controller.minusMoney)
 
 router.post('/:id/journal/note', isLoggedIn, controller.note)
 

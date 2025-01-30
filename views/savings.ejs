@@ -2,4 +2,28 @@
 
 <img src="/images/SavingsIllus.png" class="save-img">
 
-<h1></h1>
+<main class='save-main'>
+    <h1>👋 Hello, <%=userData.username%></h1>
+    <h2 class="savings">
+        Your Savings are:
+        <% if (userData.savings && userData.savings.savings) { %>
+            <%=userData.savings.savings%>
+        <% } else { %>
+            0
+        <% } %>
+    </h2>
+
+    <form action="/trackmint/<%=currentUser._id%>/savings" method="POST" class="add-form">
+        <input type="number" name="amount" class="amount" placeholder="Amount">
+        <button class="add-btn">Deposit Money</button>
+    </form>
+    <form action="/trackmint/<%=currentUser._id%>/savings?_method=PUT" method="POST" class="minus-form">
+        <input type="number" name="amount" class="amount" placeholder="Amount">
+        <button class="minus-btn">Withdraw Money</button>
+    </form>
+
+    <ul class="history">
+    </ul>
+</main>
+
+<script src="/js/savings.js"></script>

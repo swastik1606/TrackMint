@@ -1,6 +1,7 @@
 const express = require('express');
 const data=require('../models/data_model.js');
 const user=require('../models/user_model.js');
+const savings=require('../models/savings_model.js')
 
 module.exports.dashboard = async (req, res) => {
     if (res.locals.currentUser) {
@@ -146,6 +147,7 @@ module.exports.journal= async (req,res)=>{
         id:d._id
     }))
 
+
     res.render('journal.ejs',{details})
 }
 
@@ -253,16 +255,52 @@ module.exports.edit=async(req,res)=>{
 }
 
 module.exports.savings=async(req,res)=>{
-    const userData=await user.findById(req.user._id).populate('data')
-    const details= userData.data.map(d=>({
-        month:d.date.month,
-        year:d.date.year,
-        earnings:d.earnings.amount,
-        expenses:d.expenses.amount,
-        earningsCat:d.earnings.category,
-        expenseCat:d.expenses.category,
-        notes:d.notes,
-        id:d._id
-    }))
-    res.render('savings.ejs',{userData, details})
+    const userData=await user.findById(req.user._id).populate('savings')
+    res.render('savings.ejs',{userData})
+}
+
+module.exports.addMoney=async(req,res)=>{
+    const userData=await user.findById(req.user._id).populate('savings')
+    const{amount}=req.body
+
+    const parsedAmount = parseFloat(amount);
+
+    if (userData.savings) {
+        const currentSaving = await savings.findById(userData.savings);
+        // Convert existing savings to number and add new amount
+        const currentAmount = Number(currentSaving.savings);
+        currentSaving.savings = currentAmount + parsedAmount;
+        await currentSaving.save();
+    } else {
+        // Create new savings with parsed number amount
+        const newSaving = new savings({ savings: parsedAmount });
+        await newSaving.save();
+        userData.savings = newSaving._id;
+        await userData.save();
+    }
+
+    res.redirect(`/trackmint/${req.user._id}/savings`)
+}
+
+module.exports.minusMoney=async (req,res)=>{
+    const userData=await user.findById(req.user._id).populate('savings')
+    const {amount}=req.body
+
+    const parsedAmount = parseFloat(amount);
+
+    if(userData.savings){
+        const currentSaving = await savings.findById(userData.savings);
+        const currentAmount=Number(currentSaving.savings)
+        if(currentAmount>=parsedAmount){
+        currentSaving.savings=currentAmount-parsedAmount
+        await currentSaving.save()
+        }
+        else{
+            console.log("you don't have this amount of money in ur savings")
+        }
+    }
+    else{
+        console.log("you don't have any money to withdraw from")
+    }
+    res.redirect(`/trackmint/${req.user._id}/savings`)
 }

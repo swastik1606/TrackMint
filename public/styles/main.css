@@ -437,6 +437,12 @@ nav li:hover{
     font-size: 18px;
 }
 
+.info-div span{
+    font-size: 22px;
+    font-weight: 500;
+    color: #adffc3;
+}
+
 .notes-form {
     display: flex;
     flex-direction: row; /* Changed from column to row */
@@ -520,8 +526,63 @@ nav li:hover{
     color:#adffc3;
 }
 
+.save-main{
+    text-align: center;
+}
+
+.save-main h1{
+    font-size: 45px;
+    margin-top: -10px;
+}
+
+.save-main h2{
+    font-size: 30px;
+}
+
+.savings{
+    color: #adffc3;
+}
+
 .save-img{
-    width: 250px;
-    height: 250px;
+    width: 265px;
+    height: 265px;
     margin: 0 auto;
+}
+
+.add-btn{
+    background-color: #adffc3;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: transparent;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.minus-btn{
+    background-color: #adffc3;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    border: transparent;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.amount {
+    width: 200px;
+    height: 26px;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    background-color: #c4c3c3;
+    transition: background-color 200ms;
+    padding: 5px;
+}
+
+.amount:focus{
+    background-color: whitesmoke;
+}
+.save-main form{
+    margin-top: 10px;
 }
