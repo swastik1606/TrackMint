@@ -1,7 +1,7 @@
 const express = require('express');
-const data=require('../models/data_model.js');
-const user=require('../models/user_model.js');
-const savings=require('../models/savings_model.js')
+const data = require('../models/data_model.js');
+const user = require('../models/user_model.js');
+const savings = require('../models/savings_model.js')
 
 module.exports.dashboard = async (req, res) => {
     if (res.locals.currentUser) {
@@ -35,7 +35,7 @@ module.exports.userDashboard = async (req, res) => {
 
             acc[monthKey].earnings += curr.earnings.amount;
             acc[monthKey].expenses += curr.expenses.amount;
-            
+
             // Extract categories as needed
             acc[monthKey].earningsCategory = [...new Set([...acc[monthKey].earningsCategory, ...curr.earnings.category])];
             acc[monthKey].expensesCategory = [...new Set([...acc[monthKey].expensesCategory, ...curr.expenses.category])];
@@ -60,27 +60,27 @@ module.exports.userDashboard = async (req, res) => {
             userData,
             monthlyData: Object.entries(monthlyData)
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         res.redirect('/trackmint');
     }
 };
 
-module.exports.data=(req,res)=>{
+module.exports.data = (req, res) => {
     res.render('data.ejs')
 }
 
 module.exports.addData = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { 
-            'date.month': month, 
+        const {
+            'date.month': month,
             'date.year': year,
             'earnings.amount': earningsAmounts,
-            'earnings.category': earningsCategories, 
+            'earnings.category': earningsCategories,
             'expenses.amount': expensesAmounts,
             'expenses.category': expensesCategories,
-            notes 
+            notes
         } = req.body;
 
         // Create categoryAmounts map for earnings
@@ -121,94 +121,104 @@ module.exports.addData = async (req, res) => {
             },
             notes
         };
-        
+
         const savedData = await data.create(newDataEntry);
         const userData = await user.findById(userId);
         userData.data.push(savedData);
         await userData.save();
 
+        req.flash('success', 'Your data has been succesfully recorded!')
         res.redirect(`/trackmint/${userId}/dashboard`);
     } catch (error) {
         console.error('Error adding data:', error);
+        req.flash('error', 'There was an error while adding your data!')
         res.status(500).redirect('/trackmint');
     }
 };
 
-module.exports.journal= async (req,res)=>{
-    const userData=await user.findById(req.user._id).populate('data')
-    const details= userData.data.map(d=>({
-        month:d.date.month,
-        year:d.date.year,
-        earnings:d.earnings.amount,
-        expenses:d.expenses.amount,
-        earningsCat:d.earnings.category,
-        expenseCat:d.expenses.category,
-        notes:d.notes,
-        id:d._id
+module.exports.journal = async (req, res) => {
+    const userData = await user.findById(req.user._id).populate('data')
+    const details = userData.data.map(d => ({
+        month: d.date.month,
+        year: d.date.year,
+        earnings: d.earnings.amount,
+        expenses: d.expenses.amount,
+        earningsCat: d.earnings.category,
+        expenseCat: d.expenses.category,
+        notes: d.notes,
+        id: d._id
     }))
 
 
-    res.render('journal.ejs',{details})
+    res.render('journal.ejs', { details })
 }
 
-module.exports.note=async (req,res)=>{
-    try{
-        const {docId, note}=req.body
+module.exports.note = async (req, res) => {
+    try {
+        const { docId, note } = req.body
 
-        const updatedData=await data.findByIdAndUpdate(docId, {notes:note}, {new:true});
+        const updatedData = await data.findByIdAndUpdate(docId, { notes: note }, { new: true });
 
-        if(!updatedData){
+        if (!updatedData) {
             console.error("Document not found!")
         }
 
-        res.json({success:true, note:updatedData.notes })
+        res.json({ success: true, note: updatedData.notes })
     }
 
-    catch(err){
+    catch (err) {
         console.error('error updating data', err)
     }
-    
+
 }
 
-module.exports.getManagePage=async (req,res)=>{
-    const userData=await user.findById(req.user._id).populate('data')
-    const details=userData.data.map(d=>({
-        month:d.date.month,
-        year:d.date.year,
-        earnings:d.earnings.amount,
-        expenses:d.expenses.amount,
-        earningsCat:d.earnings.category,
-        expenseCat:d.expenses.category,
-        notes:d.notes,
-        id:d._id
+module.exports.getManagePage = async (req, res) => {
+    const userData = await user.findById(req.user._id).populate('data')
+    const details = userData.data.map(d => ({
+        month: d.date.month,
+        year: d.date.year,
+        earnings: d.earnings.amount,
+        expenses: d.expenses.amount,
+        earningsCat: d.earnings.category,
+        expenseCat: d.expenses.category,
+        notes: d.notes,
+        id: d._id
     }))
 
-    res.render('manage.ejs',{details})
+    res.render('manage.ejs', { details })
 }
 
-module.exports.delete=async(req,res)=>{
-    const {id, documentId}=req.params
-    const deletedData= await data.findByIdAndDelete(documentId)
-    await user.findByIdAndUpdate(id, {$pull: {data:documentId}})
-    res.redirect(`/trackmint/data/${id}/manage`)
+module.exports.delete = async (req, res) => {
+    try {
+        const { id, documentId } = req.params
+        const deletedData = await data.findByIdAndDelete(documentId)
+        await user.findByIdAndUpdate(id, { $pull: { data: documentId } })
+        req.flash('success', 'Your data has been successfully deleted!')
+        res.redirect(`/trackmint/data/${id}/manage`)
+    }
+    catch (e) {
+        req.flash('error', 'There was a problem while deleting you data!')
+        res.redirect(`trackmint/${req.user._id}/dashboard`)
+    }
 }
 
-module.exports.getEditPage=async (req,res)=>{
-    const {id, documentId}=req.params
-    const foundData= await data.findById(documentId)
-    res.render('edit.ejs',{foundData})
+module.exports.getEditPage = async (req, res) => {
+    const { id, documentId } = req.params
+    const foundData = await data.findById(documentId)
+    res.render('edit.ejs', { foundData })
 }
 
-module.exports.edit=async(req,res)=>{
-    const { id, documentId } = req.params;
-        const { 
-            'date.month': month, 
+module.exports.edit = async (req, res) => {
+    try {
+        const { id, documentId } = req.params;
+        const {
+            'date.month': month,
             'date.year': year,
             'earnings.amount': earningsAmounts,
-            'earnings.category': earningsCategories, 
+            'earnings.category': earningsCategories,
             'expenses.amount': expensesAmounts,
             'expenses.category': expensesCategories,
-            notes 
+            notes
         } = req.body;
 
         // Create categoryAmounts map for earnings
@@ -251,17 +261,52 @@ module.exports.edit=async(req,res)=>{
         };
 
         await data.findByIdAndUpdate(documentId, updatedData);
+        req.flash('success', 'Your data has been successfully edited!')
         res.redirect(`/trackmint/data/${id}/manage`);
+    }
+    catch (e) {
+        req.flash('error', 'There was a problem while editing your data!')
+        res.redirect(`/trackmint/${req.user._id}/dashboard`)
+    }
 }
 
-module.exports.savings=async(req,res)=>{
-    const userData=await user.findById(req.user._id).populate('savings')
-    res.render('savings.ejs',{userData})
+module.exports.savings = async (req, res) => {
+    const userData = await user.findById(req.user._id).populate('savings')
+    res.render('savings.ejs', { userData })
 }
 
-module.exports.addMoney=async(req,res)=>{
-    const userData=await user.findById(req.user._id).populate('savings')
-    const{amount}=req.body
+module.exports.addMoney = async (req, res) => {
+    const userData = await user.findById(req.user._id).populate('savings')
+    const { amount } = req.body
+
+    const parsedAmount = parseFloat(amount);
+
+    try {
+        if (userData.savings) {
+            const currentSaving = await savings.findById(userData.savings);
+            // Convert existing savings to number and add new amount
+            const currentAmount = Number(currentSaving.savings);
+            currentSaving.savings = currentAmount + parsedAmount;
+            await currentSaving.save();
+        } else {
+            // Create new savings with parsed number amount
+            const newSaving = new savings({ savings: parsedAmount });
+            await newSaving.save();
+            userData.savings = newSaving._id;
+            await userData.save();
+        }
+    }
+    catch (e) {
+        req.flash('error', 'There was a problem while added your saving!')
+    }
+
+    req.flash('success', `Saving of ${parsedAmount} deposited`)
+    res.redirect(`/trackmint/${req.user._id}/savings`)
+}
+
+module.exports.minusMoney = async (req, res) => {
+    const userData = await user.findById(req.user._id).populate('savings')
+    const { amount } = req.body
 
     const parsedAmount = parseFloat(amount);
 
@@ -269,7 +314,7 @@ module.exports.addMoney=async(req,res)=>{
         const currentSaving = await savings.findById(userData.savings);
         // Convert existing savings to number and add new amount
         const currentAmount = Number(currentSaving.savings);
-        currentSaving.savings = currentAmount + parsedAmount;
+        currentSaving.savings = currentAmount - parsedAmount;
         await currentSaving.save();
     } else {
         // Create new savings with parsed number amount
@@ -279,28 +324,6 @@ module.exports.addMoney=async(req,res)=>{
         await userData.save();
     }
 
-    res.redirect(`/trackmint/${req.user._id}/savings`)
-}
-
-module.exports.minusMoney=async (req,res)=>{
-    const userData=await user.findById(req.user._id).populate('savings')
-    const {amount}=req.body
-
-    const parsedAmount = parseFloat(amount);
-
-    if(userData.savings){
-        const currentSaving = await savings.findById(userData.savings);
-        const currentAmount=Number(currentSaving.savings)
-        if(currentAmount>=parsedAmount){
-        currentSaving.savings=currentAmount-parsedAmount
-        await currentSaving.save()
-        }
-        else{
-            console.log("you don't have this amount of money in ur savings")
-        }
-    }
-    else{
-        console.log("you don't have any money to withdraw from")
-    }
+    req.flash('success', `Saving of ${parsedAmount} withdrawn`)
     res.redirect(`/trackmint/${req.user._id}/savings`)
 }

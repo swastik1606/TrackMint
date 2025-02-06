@@ -20,9 +20,11 @@ module.exports.regPost=async (req,res)=>{
         });
     });
     const id= req.user._id;
+    req.flash('success','Welcome to TrackMint!')
     res.redirect(`/trackmint/data`);}
 
     catch(e){
+        req.flash('error','There was en an error while registering you!')
         console.log(e);
     }
 }
@@ -32,9 +34,16 @@ module.exports.login=(req,res)=>{
 }
 
 module.exports.loginPost=(req,res)=>{
-    const redirectUrl=res.locals.returnTo || '/trackmint';
-    delete res.locals.returnTo; 
-    res.redirect(redirectUrl);
+    try{
+        const redirectUrl=res.locals.returnTo || '/trackmint';
+        delete res.locals.returnTo;
+        req.flash('success','Welcome back to TrackMint!')
+        res.redirect(`/trackmint/${req.user._id}/dashboard`);
+    }
+    catch(e){
+        req.flash('error','There was en error loggin you in!')
+        res.redirect('/trackmint')
+    }
 }
 
 module.exports.logout=(req,res)=>{
@@ -43,10 +52,12 @@ module.exports.logout=(req,res)=>{
             if(err){
                 return next(err);
             }
+            req.flash('success',"You've been logged out!")
             res.redirect('/trackmint');
         });
     }
     else{
+        req.flash('success',"You can't logout yet!")
         res.redirect('/trackmint');
     }
 }

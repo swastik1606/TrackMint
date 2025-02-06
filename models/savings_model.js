@@ -8,7 +8,7 @@ const savingsSchema=new Schema({
         min:0,
         default:0
     },
-    hsitory:[{
+    history:[{
         type: { type: String, enum: ['deposit', 'withdrawal'] },
         amount: Number,
         date: { type: Date, default: Date.now }
